@@ -1,0 +1,690 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+#headerContainer {
+    background-image: url(../content/mainBackground.jpg);
+    background-size: cover;
+    background-position: center center;
+    width: calc(99.5vw + 1vh);
+    height: calc(20vw + 5vh);
+    display: flex;
+    justify-content: center;
+    
+}
+
+.textBackground {
+    width: calc(99.4vw + 1vh);
+    height: calc(20vw + 5vh);
+    overflow: hidden;
+    background-image: linear-gradient(to left, rgba(255,0,0,0) 10%, rgb(0, 0, 0) 100%);
+    position: absolute;
+    z-index: 0;
+}
+
+.textContainer {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 60px;
+    gap: 20px;
+    z-index: 1;
+}
+
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  justify-content: center;
+  align-items: center;
+}
+
+.textContainer h1,
+.textContainer h2,
+.textContainer p {
+    font-size: calc(1vw + 1vh);
+}
+
+.textContainer h1 {
+    color: white;
+}
+
+.textContainer h2 {
+    color: rgb(139, 247, 255);
+}
+
+.textContainer p {
+    color: rgb(150, 250, 150);
+}
+
+
+
+
+
+.cardContainer {
+    width: fit-content;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: calc(99.5vw + 1vh);
+    height: calc(22vw + 5vh);
+  }
+
+
+  
+  .card {
+    position: relative;
+    width: calc(99.4vw + 1vh);
+    height: calc(20vw + 5vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: calc(0.8vw + 0.8vh);
+    backdrop-filter: blur(20px);
+    background-color: rgba(72, 72, 72, 0.308);
+    border: 1px solid rgba(255, 255, 255, 0.089);
+    cursor: pointer;
+    margin: 30px 0 20px 0;
+  }
+  
+  .city {
+    font-weight: 700;
+    font-size: 0.9em;
+    letter-spacing: 1.2px;
+    color: white;
+  }
+
+  .countryText {
+    font-weight: 500;
+    font-size: 1em;
+    letter-spacing: 1px;
+    color: rgb(255, 255, 255);
+
+  }
+  
+  .weather {
+    font-weight: 500;
+    font-size: 0.8em;
+    letter-spacing: 1.2px;
+    color: rgb(255, 255, 255);
+
+
+  }
+  
+  .temp {
+    font-size: 1.8em;
+    color: white;
+    padding-left: 15px;
+  }
+  
+  .weatherDataContainer {
+    width: calc(99vw + 1vh);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    
+  }
+  .first,
+  .new,
+  .last {
+    width: calc(4vw + 0.5vh);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 20px;
+    gap: 4px;
+  }
+
+  .mainWeatherContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .min {
+
+    border-left: 2px solid white;
+  }
+
+  .new {
+
+    border-left: 2px solid white;
+  }
+
+  .last {
+
+    border-left: 2px solid white;
+
+  }
+  
+  .maxHeading,
+  .minHeading {
+    font-size: 0.7em;
+    font-weight: 600;
+    color: white;
+  }
+  
+  .maxTemp,
+  .minTemp {
+    font-size: 0.7em;
+    font-weight: 500;
+    color: rgb(255, 255, 255);
+  }
+  
+  .cardContainer::before {
+    width: calc(5vw + 2vh);
+    height: calc(5vw + 1vh);
+    content: "";
+    position: absolute;
+    background-color: rgb(144, 161, 255);
+    z-index: -1;
+    border-radius: 30%;
+    left: 100px;
+    top: 50px;
+    transition: all 1s;
+  }
+
+  .cardContainer::after {
+    width: calc(5vw + 2vh);
+    height: calc(5vw + 1vh);
+    content: "";
+    position: absolute;
+    background-color: rgb(144, 161, 255);
+    z-index: -1;
+    border-radius: 30%;
+    right: 100px;
+    bottom: 50px;
+    transition: all 1s;
+  }
+  
+  .cardContainer:hover::before{
+    transform: translate(-50px, 50px);
+  }
+
+  .cardContainer:hover::after{
+    transform: translate(50px, -50px);
+  }
+
+  .copyrightContainer {
+    width: calc(99.4vw + 1vh);
+    height: calc(1vw + 1vh);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5px;
+  }
+
+
+
+.errorMessage {
+  margin-top: 10px;
+  padding: 0;
+  font-weight: 400;
+  color: red;
+}
+
+
+
+
+.topnav {
+  overflow: hidden;
+  background-color: #e9e9e9;
+}
+
+
+.topnav input[type=text] {
+  padding: 6px;
+  border: none;
+  font-size: 17px;
+}
+
+#getWeather {
+  display: none;
+}
+
+
+/* BUTTON 14 */
+.Btn14 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition-duration: .3s;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.199);
+  background-color: rgb(255, 65, 65);
+}
+
+/* plus sign */
+.sign14 {
+  width: 100%;
+  transition-duration: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign14 svg {
+  width: 17px;
+}
+
+.sign14 svg path {
+  fill: white;
+}
+/* text */
+.text14 {
+  position: absolute;
+  right: 0%;
+  width: 0%;
+  opacity: 0;
+  color: white;
+  font-size: 1.2em;
+  font-weight: 600;
+  transition-duration: .3s;
+}
+/* hover effect on button width */
+.Btn14:hover {
+  width: 125px;
+  border-radius: 40px;
+  transition-duration: .3s;
+}
+
+.Btn14:hover .sign14 {
+  width: 30%;
+  transition-duration: .3s;
+  padding-left: 5px;
+}
+/* hover effect button's text */
+.Btn14:hover .text14 {
+  opacity: 1;
+  width: 70%;
+  transition-duration: .3s;
+  padding-right: 5px;
+
+}
+/* button click effect*/
+.Btn14:active {
+  transform: translate(2px ,2px);
+}
+/* BUTTON 14 */
+
+
+
+
+
+
+
+
+.buttons-year {
+  width: 99%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+.buttons-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: rgba(128, 128, 128, 0.2);
+  width: 30em;
+  margin: 0 2em;
+  position: absolute;
+  margin-top: 2em;
+  
+}
+
+.buttons-container a {
+  text-decoration: none;
+}
+
+.year-container {
+  position: absolute;
+  text-align: center;
+  margin-top: 5.5em;
+  font-size: large;
+}
+
+  /* BUTTON 49 */
+.outline {
+  background-color: transparent;
+  border: 2px solid #000000;
+  border-radius: 0;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-around;
+  outline: none;
+  overflow: visible;
+  position: relative;
+  transition: all 0.3s ease-in-out;
+  width: 100%;
+}
+
+#year {
+  color: black;
+}
+
+
+
+.outline .top-key {
+  height: 2px;
+  width: 1.5625rem;
+  top: -2px;
+  left: 0.625rem;
+  position: absolute;
+  background: #ffffff;
+  transition: width 0.5s ease-out, left 0.3s ease-out;
+}
+
+.outline .bottom-key-1 {
+  height: 2px;
+  width: 1.5625rem;
+  right: 1.875rem;
+  bottom: -2px;
+  position: absolute;
+  background: #ffffff;
+  transition: width 0.5s ease-out, right 0.3s ease-out;
+}
+
+.outline .bottom-key-2 {
+  height: 2px;
+  width: 0.625rem;
+  right: 0.625rem;
+  bottom: -2px;
+  position: absolute;
+  background: #ffffff;
+  transition: width 0.5s ease-out, right 0.3s ease-out;
+}
+
+.outline:hover {
+  background: white;
+}
+
+.outline:hover::before {
+  width: 0.9375rem;
+  background: black;
+}
+
+.outline:hover .text {
+  color: black;
+  padding-left: 1.5em;
+}
+
+.outline:hover .top-key {
+  left: -2px;
+  width: 0px;
+}
+
+.outline:hover .bottom-key-1,
+.outline:hover .bottom-key-2 {
+  right: 0;
+  width: 0;
+}
+
+/* BUTTON 49 */
+
+
+
+
+
+/* Return home button */
+
+.return-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 7em;
+    height: 3em;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+    margin-bottom: 0 !important;
+    background-color: #000000; 
+}
+    
+
+.return-sign {
+    width: 100%;
+    transition-duration: .3s;
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+}
+
+.return-sign svg {
+    width: 1.4em; 
+}
+
+.return-sign svg path {
+    fill: white; 
+}
+
+.return-text {
+    position: absolute;
+    right: 0%;
+    width: 0%;
+    opacity: 0;
+    color: white;
+    font-size: 1.2em;
+    font-weight: 600;
+    transition-duration: .3s; 
+}
+
+
+.return-button:hover {
+    width: 15em;
+    transition-duration: .3s; 
+}
+
+.return-button:hover .return-sign {
+    width: 30%;
+    transition-duration: .3s;
+    padding-left: 1.5em; 
+}
+
+
+.return-button:hover .return-text {
+    opacity: 1;
+    width: 70%;
+    transition-duration: .3s;
+    padding-right: 0.2em; 
+}
+
+
+.return-button:active {
+    transform: translate(2px, 2px); 
+}
+
+/* Return home button */
+
+
+/* View code button */
+
+
+.code-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3em;
+    height: 3em;
+    width: 7em;
+    border: none;
+    background-color: black;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 0 !important;
+    overflow: hidden; 
+}
+  
+.bracket {
+    font-size: 1.3em;
+    transition: all 0.3s;
+    color: #ffffff;
+    
+}
+
+.left,
+.right {
+    margin-bottom: 0.2em;
+}
+
+.code-text {
+    font-size: 0.8em;
+    width: 0;
+    transform: scale(0);
+    transition: all .3s;
+    white-space: nowrap;
+    color: white; 
+    
+}
+  
+.code-button:hover {
+    width: 15em; 
+}
+  
+.code-button:hover .code-text {
+    transform: scale(1.4);
+    width: 13em; 
+}
+
+
+@media (max-width: 1024px) {
+  * {
+      transition: none;
+      animation: none;
+  }
+  
+  .buttons-container {
+      width: 27em;
+  }
+
+  .return-button {
+      width: 16em !important;
+      
+  }
+
+  .return-sign {
+      width: 30%;
+      padding-left: 1.5em;
+  }
+
+  .return-text {
+      opacity: 1;
+      width: 70%;
+      padding-right: 0.5em;
+      font-size: 1.8em;
+  }
+
+
+  .code-button {
+      width: 16em !important;
+  }
+
+  .code-text {
+      transform: scale(1.4);
+      width: 8em !important;
+      font-size: 1.2em; 
+  }
+
+  .bracket {
+      font-size: 2em;
+  }
+
+  
+
+  .cardContainer {
+    height: 30em;
+  }
+
+  .card {
+    height: 100%;
+  }
+}
+
+
+@media (max-width: 430px) {
+
+  .buttons-container {
+      width: 25em;
+      
+    }
+
+
+  .return-button {
+    width: 10em !important;
+    height: 3em;
+  }
+
+  .return-sign {
+      width: 40%;
+      padding-left: 0;
+      padding-right: 0.5em;
+  }
+
+  .return-text {
+      opacity: 1;
+      width: 70%;
+      padding-right: 0.5em;
+      font-size: 0.8em;
+  }
+
+
+
+  .code-button {
+      width: 10em !important;
+      height: 3em;
+  }
+
+  .code-text {
+      transform: scale(1.4);
+      width: 12em !important;
+      font-size: 0.6em; 
+  }
+
+  .bracket {
+      font-size: 1.5em;
+  }
+
+
+  .textContainer {
+    margin: 0;
+  }
+
+  .cardContainer {
+    height: 20em;
+  }
+
+  .card {
+    height: 100%;
+  }
+}
+
+
+
+
