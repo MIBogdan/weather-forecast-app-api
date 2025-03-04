@@ -1,19 +1,18 @@
-const e = require('express');
-const bodyParser = require('body-parser');
-const axios = require('axios');
-const IP = require('ip');
-
+const e = require("express");
+const bodyParser = require("body-parser");
+const axios = require("axios");
+const IP = require("ip");
 
 const app = e();
 const port = 3000;
 
 app.use(e.static("public"));
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?lat=44.426765&lon=26.102537";
-const API_KEY = "&appid=82bc0730c9febabfd1a583cf016c2b4d"
+const API_KEY = "&appid=82bc0730c9febabfd1a583cf016c2b4d";
 
-const COUNTRY_URL = "http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5"
+const COUNTRY_URL = "http://api.openweathermap.org/geo/1.0/direct?q=London&limit=5";
 const ipAddress = IP.address();
 const yearData = new Date().getFullYear();
 let chosenCity;
@@ -29,179 +28,145 @@ let button = `<form action="/return-home" method="post">
 
 let fullName;
 
-
 function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 app.get("/", async (req, res) => {
-    try {
-        const result = await axios.get("http://ip-api.com/json/" + ipAddress);
-        let cityByIP = result.data.city;
+  try {
+    const result = await axios.get("http://ip-api.com/json/" + ipAddress);
+    let cityByIP = result.data.city;
 
-
-        if (cityByIP === undefined) {
-            errorMessage = `Could not get your IP address. Default city has been set to Bucharest-Romania.`;
-            chosenCity = "Bucharest";
-        } else {
-            chosenCity = cityByIP;
-        }
-        
-
-        try {
-            const result = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=1` + API_KEY);
-            const lat = result.data[0].lat;
-            const lon = result.data[0].lon;
-            let cityName = result.data[0].name;
-            let countryName = result.data[0].country;
-            fullName = `${cityName}, ${countryName}`;
-            
-            
-            try {
-                const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}` + API_KEY);
-                
-                const tempInK = result.data.main.temp;
-                const minTempInK = result.data.main.temp_min;
-                const maxTempInK = result.data.main.temp_max;
-                const temperature = Math.floor(tempInK - 273.15);
-                const minTemperature = Math.floor(minTempInK - 273.15);
-                const maxTemperature = Math.floor(maxTempInK - 273.15);
-                const humidity = result.data.main.humidity;
-                const windSpeed = result.data.wind.speed;
-                const status = result.data.weather[0].description;
-                let statusDescription = status.split(" ");
-
-                for (let i = 0; i < statusDescription.length; i++) {
-                    statusDescription[i] = statusDescription[i][0].toUpperCase() + statusDescription[i].substr(1);
-                }
-                 statusDescription = statusDescription[0] + " " + statusDescription[1];
-                
-
-                
-    
-                const allData = {
-                    temperature,
-                    minTemperature,
-                    maxTemperature,
-                    humidity,
-                    windSpeed,
-                    status,
-                    statusDescription,
-                    chosenCity,
-                    fullName
-                }
-    
-                res.render("index.ejs", {year: yearData, allData, errorMessage, message });
-            } catch (error) {
-                console.log(error);
-                errorMessage = `Error type: "${error.response}" this could be the result of the API failing to send data about the city or country required. `;
-            }
-        } catch(error) {
-            console.log(error);
-            errorMessage = `Error: "${error.response}" this could be the result of the server failing to get latitude and longitude data from API`;
-        }
-
-
-    } catch(error) {
-        console.log(error);
-        
-        errorMessage = `Error: ${error.response}`;
-        
-       
+    if (cityByIP === undefined) {
+      errorMessage = `Could not get your IP address. Default city has been set to Bucharest-Romania.`;
+      chosenCity = "Bucharest";
+    } else {
+      chosenCity = cityByIP;
     }
+
+    try {
+      const result = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=1` + API_KEY);
+      const lat = result.data[0].lat;
+      const lon = result.data[0].lon;
+      let cityName = result.data[0].name;
+      let countryName = result.data[0].country;
+      fullName = `${cityName}, ${countryName}`;
+
+      try {
+        const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}` + API_KEY);
+
+        const tempInK = result.data.main.temp;
+        const minTempInK = result.data.main.temp_min;
+        const maxTempInK = result.data.main.temp_max;
+        const temperature = Math.floor(tempInK - 273.15);
+        const minTemperature = Math.floor(minTempInK - 273.15);
+        const maxTemperature = Math.floor(maxTempInK - 273.15);
+        const humidity = result.data.main.humidity;
+        const windSpeed = result.data.wind.speed;
+        const status = result.data.weather[0].description;
+        let statusDescription = status.split(" ");
+
+        for (let i = 0; i < statusDescription.length; i++) {
+          statusDescription[i] = statusDescription[i][0].toUpperCase() + statusDescription[i].substr(1);
+        }
+        statusDescription = statusDescription[0] + " " + statusDescription[1];
+
+        const allData = {
+          temperature,
+          minTemperature,
+          maxTemperature,
+          humidity,
+          windSpeed,
+          status,
+          statusDescription,
+          chosenCity,
+          fullName,
+        };
+
+        res.render("index.ejs", { year: yearData, allData, errorMessage, message });
+      } catch (error) {
+        console.log(error);
+        errorMessage = `Error type: "${error.response}" this could be the result of the API failing to send data about the city or country required. `;
+      }
+    } catch (error) {
+      console.log(error);
+      errorMessage = `Error: "${error.response}" this could be the result of the server failing to get latitude and longitude data from API`;
+    }
+  } catch (error) {
+    console.log(error);
+
+    errorMessage = `Error: ${error.response}`;
+  }
 });
 
-
 app.post("/get-weather", async (req, res) => {
-    let inputCity = req.body.country;
-    errorMessage = "";
-    
+  let inputCity = req.body.country;
+  errorMessage = "";
 
-    chosenCity = capitalizeFirstLetter(inputCity);
+  chosenCity = capitalizeFirstLetter(inputCity);
 
+  try {
+    const result = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=1` + API_KEY);
+    const lat = result.data[0].lat;
+    const lon = result.data[0].lon;
+    let cityName = result.data[0].name;
+    let countryName = result.data[0].country;
+    fullName = `${cityName}, ${countryName}`;
 
     try {
-        const result = await axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${chosenCity}&limit=1` + API_KEY);
-        const lat = result.data[0].lat;
-        const lon = result.data[0].lon;
-        let cityName = result.data[0].name;
-        let countryName = result.data[0].country;
-        fullName = `${cityName}, ${countryName}`;
+      const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}` + API_KEY);
+      const tempInK = result.data.main.temp;
+      const minTempInK = result.data.main.temp_min;
+      const maxTempInK = result.data.main.temp_max;
+      const temperature = Math.floor(tempInK - 273.15);
+      const minTemperature = Math.floor(minTempInK - 273.15);
+      const maxTemperature = Math.floor(maxTempInK - 273.15);
+      const humidity = result.data.main.humidity;
+      const windSpeed = result.data.wind.speed;
+      const status = result.data.weather[0].description;
+      let statusDescription = status.split(" ");
 
-        try {
-            const result = await axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}` + API_KEY);
-            const tempInK = result.data.main.temp;
-            const minTempInK = result.data.main.temp_min;
-            const maxTempInK = result.data.main.temp_max;
-            const temperature = Math.floor(tempInK - 273.15);
-            const minTemperature = Math.floor(minTempInK - 273.15);
-            const maxTemperature = Math.floor(maxTempInK - 273.15);
-            const humidity = result.data.main.humidity;
-            const windSpeed = result.data.wind.speed;
-            const status = result.data.weather[0].description;
-            let statusDescription = status.split(" ");
+      for (let i = 0; i < statusDescription.length; i++) {
+        statusDescription[i] = statusDescription[i][0].toUpperCase() + statusDescription[i].substr(1);
+      }
 
-            for (let i = 0; i < statusDescription.length; i++) {
-                statusDescription[i] = statusDescription[i][0].toUpperCase() + statusDescription[i].substr(1);
-            }
+      statusDescription = statusDescription[0] + " " + statusDescription[1];
 
-            
+      const allData = {
+        temperature,
+        minTemperature,
+        maxTemperature,
+        humidity,
+        windSpeed,
+        statusDescription,
+        chosenCity,
+        fullName,
+      };
 
-            statusDescription = statusDescription[0] + " " + statusDescription[1];
-            
-
-            
-            
-
-            const allData = {
-                temperature,
-                minTemperature,
-                maxTemperature,
-                humidity,
-                windSpeed,
-                statusDescription,
-                chosenCity,
-                fullName
-            }
-
-            
-
-            res.render("index.ejs", {year: yearData, allData, errorMessage, message });
-            
-            
-        } catch (error) {
-            console.log(error);
-            errorMessage = `Error type: "${error}". There has been some problems trying to get data from API `;
-        }
-    } catch(error) {
-        if (!inputCity) {
-            message = "Nothing to geocode. Type something";
-            
-        } else {
-            message = "The country/city does not exist.";
-            
-        }
-        
-        let messageButton = {
-            message,
-            button
-        }
-        res.render("index.ejs", {messageButton});
+      res.render("index.ejs", { year: yearData, allData, errorMessage, message });
+    } catch (error) {
+      console.log(error);
+      errorMessage = `Error type: "${error}". There has been some problems trying to get data from API `;
+    }
+  } catch (error) {
+    if (!inputCity) {
+      message = "Nothing to geocode. Type something";
+    } else {
+      message = "The country/city does not exist.";
     }
 
-
+    let messageButton = {
+      message,
+      button,
+    };
+    res.render("index.ejs", { messageButton });
+  }
 });
 
 app.post("/return-home", (req, res) => {
-    res.redirect("/");
-})
-
-
-
-
+  res.redirect("/");
+});
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+  console.log(`Server is running on port ${port}`);
 });

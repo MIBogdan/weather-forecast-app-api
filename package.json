@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "concurrently \"node index.js\" \"sleep 1 && npx open-cli http://localhost:3000\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -15,5 +16,9 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "ip": "^2.0.1"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "open-cli": "^8.0.0"
   }
 }
