@@ -41,8 +41,8 @@ The **Weather Forecast Application** is designed to help users access up-to-date
    npm install
    ```
 
-4. **IMPORTANT** Set up environment:
-### **Note:** The API key is hardcoded in `index.js` only for local testing purposes. This key is strictly intended for development use and should not be used in production or exposed in public deployments.
+### 4. **IMPORTANT** Set up environment:
+- **Note:** The API key is hardcoded in `index.js` only for local testing purposes. This key is strictly intended for development use and should not be used in production or exposed in public deployments.
 
 5. **Run** the application:
    ```bash
